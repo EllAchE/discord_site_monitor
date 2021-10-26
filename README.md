@@ -5,7 +5,7 @@
 
 ---
 ## Credit
-<a href="https://github.com/noelvissers/site-watcher/releases">Initial concept and some code borrowed from Noel Vissers' "Site-watcher" project.</a>
+<a href="https://github.com/noelvissers/site-watcher/releases">Some code borrowed from Noel Vissers' "Site-watcher" project.</a>
 
 ## Features
 
