@@ -4,7 +4,9 @@
 </p>
 
 ---
-<a href="https://github.com/noelvissers/site-watcher/releases">*Initial concept and some code borrowed from Noel Vissers' "Site-watcher" project.</a>
+## Credit
+<a href="https://github.com/noelvissers/site-watcher/releases">Initial concept and some code borrowed from Noel Vissers' "Site-watcher" project.</a>
+
 ## Features
 
 Notify you in Discord when a website changes:   
