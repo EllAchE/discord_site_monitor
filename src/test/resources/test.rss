@@ -1,0 +1,125 @@
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:georss="http://www.georss.org/georss" xmlns:gml="http://www.opengis.net/gml" xmlns:nhc="https://www.nhc.noaa.gov" version="2.0">
+<channel>
+<pubDate>Thu, 14 Oct 2021 00:24:50 GMT</pubDate>
+<title>NHC Eastern North Pacific Wallet 1 - Tropical Depression Pamela (EP162021)</title>
+<description>Latest advisories and graphics for Tropical Depression Pamela (EP16)</description>
+<link>https://www.nhc.noaa.gov/</link>
+<copyright>none</copyright>
+<managingEditor>nhcwebmaster@noaa.gov (NHC Webmaster)</managingEditor>
+<language>en-us</language>
+<webMaster>nhcwebmaster@noaa.gov (NHC Webmaster)</webMaster>
+<image>
+<url>https://www.nhc.noaa.gov/gifs/xml_logo_nhc.gif</url>
+<link>https://www.nhc.noaa.gov/</link>
+<description>NOAA logo</description>
+<title>NHC Eastern North Pacific Wallet 1 - Tropical Depression Pamela (EP162021)</title>
+<width>95</width>
+<height>45</height>
+</image>
+<item>
+<title>Summary for Tropical Depression Pamela (EP1/EP162021)</title>
+<guid isPermaLink="false">summary-ep162021-202110132035</guid>
+<pubDate>Wed, 13 Oct 2021 20:35:33 GMT</pubDate>
+<author>nhcwebmaster@noaa.gov (NHC Webmaster)</author>
+<link>https://www.nhc.noaa.gov/text/refresh/MIATCPEP1+shtml/132035.shtml</link>
+<description> ...PAMELA NOW A TROPICAL DEPRESSION OVER WEST-CENTRAL MEXICO... ...REMNANTS EXPECTED TO CONTRIBUTE TO HEAVY RAINFALL OVER TEXAS AND OKLAHOMA... As of 4:00 PM CDT Wed Oct 13 the center of Pamela was located near 26.0, -103.7 with movement NE at 28 mph. The minimum central pressure was 1003 mb with maximum sustained winds of about 35 mph. </description>
+<nhc:Cyclone>
+<nhc:center>26.0, -103.7</nhc:center>
+<nhc:type>Tropical Depression</nhc:type>
+<nhc:name>Pamela</nhc:name>
+<nhc:wallet>EP1</nhc:wallet>
+<nhc:atcf>EP162021</nhc:atcf>
+<nhc:datetime>4:00 PM CDT Wed Oct 13</nhc:datetime>
+<nhc:movement>NE at 28 mph</nhc:movement>
+<nhc:pressure>1003 mb</nhc:pressure>
+<nhc:wind>35 mph</nhc:wind>
+<nhc:headline> ...PAMELA NOW A TROPICAL DEPRESSION OVER WEST-CENTRAL MEXICO... ...REMNANTS EXPECTED TO CONTRIBUTE TO HEAVY RAINFALL OVER TEXAS AND OKLAHOMA...</nhc:headline>
+</nhc:Cyclone>
+</item>
+<item>
+<title>Tropical Depression Pamela Public Advisory Number 15</title>
+<description>
+<![CDATA[ ...PAMELA NOW A TROPICAL DEPRESSION OVER WEST-CENTRAL MEXICO... ...REMNANTS EXPECTED TO CONTRIBUTE TO HEAVY RAINFALL OVER TEXAS AND OKLAHOMA...<br /> Location: 26.0&deg;N 103.7&deg;W<br /> Max sustained: 35 mph<br /> Moving: NE at 28 mph<br /> Min pressure: 1003 mb<br /> <br /> ]]>
+Issued at 400 PM CDT Wed Oct 13 2021
+</description>
+<pubDate>Wed, 13 Oct 2021 20:35:33 GMT</pubDate>
+<link>https://www.nhc.noaa.gov/text/refresh/MIATCPEP1+shtml/132035.shtml</link>
+<guid>https://www.nhc.noaa.gov/text/refresh/MIATCPEP1+shtml/132035.shtml</guid>
+<author>nhcwebmaster@noaa.gov (NHC Webmaster)</author>
+</item>
+<item>
+<title>Tropical Depression Pamela Forecast Advisory Number 15</title>
+<description>Issued at 2100 UTC WED OCT 13 2021</description>
+<pubDate>Wed, 13 Oct 2021 20:35:06 GMT</pubDate>
+<link>https://www.nhc.noaa.gov/text/refresh/MIATCMEP1+shtml/132034.shtml</link>
+<guid>https://www.nhc.noaa.gov/text/refresh/MIATCMEP1+shtml/132034.shtml</guid>
+<author>nhcwebmaster@noaa.gov (NHC Webmaster)</author>
+</item>
+<item>
+<title>Tropical Depression Pamela Forecast Discussion Number 15</title>
+<description>Issued at 400 PM CDT Wed Oct 13 2021</description>
+<pubDate>Wed, 13 Oct 2021 20:36:38 GMT</pubDate>
+<link>https://www.nhc.noaa.gov/text/refresh/MIATCDEP1+shtml/132036.shtml</link>
+<guid>https://www.nhc.noaa.gov/text/refresh/MIATCDEP1+shtml/132036.shtml</guid>
+<author>nhcwebmaster@noaa.gov (NHC Webmaster)</author>
+</item>
+<item>
+<title>Tropical Depression Pamela Wind Speed Probabilities Number 15</title>
+<description>Issued at 2100 UTC WED OCT 13 2021 </description>
+<pubDate>Wed, 13 Oct 2021 20:36:07 GMT</pubDate>
+<link>https://www.nhc.noaa.gov/text/refresh/MIAPWSEP1+shtml/132035.shtml</link>
+<guid>https://www.nhc.noaa.gov/text/refresh/MIAPWSEP1+shtml/132035.shtml</guid>
+<author>nhcwebmaster@noaa.gov (NHC Webmaster)</author>
+</item>
+<item>
+<title>Tropical Depression Pamela Graphics</title>
+<description>
+<![CDATA[ <a href="https://www.nhc.noaa.gov/refresh/graphics_ep1+shtml/203701.shtml?cone"> <img src="https://www.nhc.noaa.gov/storm_graphics/EP16/EP162021_5day_cone_with_line_and_wind_sm2.png" alt="Tropical Depression Pamela 5-Day Uncertainty Track Image" width="500" height="400" /></a><br/> 5-Day Uncertainty Track last updated Wed, 13 Oct 2021 20:37:01 GMT <br /><br /><a href="https://www.nhc.noaa.gov/refresh/graphics_ep1+shtml/203701.shtml?tswind120"> <img src="https://www.nhc.noaa.gov/storm_graphics/EP16/EP162021_wind_probs_34_F120_sm2.png" alt="Tropical Depression Pamela 34-Knot Wind Speed Probabilities" width="500" height="400" /> </a><br/> Wind Speed Probabilities last updated Wed, 13 Oct 2021 21:22:28 GMT ]]>
+</description>
+<pubDate>Wed, 13 Oct 2021 20:37:01 GMT</pubDate>
+<link>https://www.nhc.noaa.gov/refresh/graphics_ep1+shtml/203701.shtml?cone</link>
+<guid>https://www.nhc.noaa.gov/refresh/graphics_ep1+shtml/203701.shtml?cone</guid>
+<author>nhcwebmaster@noaa.gov (NHC Webmaster)</author>
+</item>
+<item>
+<title>Tropical Depression Pamela 5-Day Track, Uncertainty Cone, Warnings (.shp)</title>
+<description>GIS Data last updated Wed, 13 Oct 2021 20:37:29 GMT</description>
+<pubDate>Wed, 13 Oct 2021 20:37:29 GMT</pubDate>
+<link>https://www.nhc.noaa.gov/gis/forecast/archive/ep162021_5day_latest.zip</link>
+<guid isPermaLink="false">gis-5day-shp-ep162021-Wed, 13 Oct 2021 20:37:29 GMT</guid>
+<author>nhcwebmaster@noaa.gov (NHC Webmaster)</author>
+</item>
+<item>
+<title>Tropical Depression Pamela Best Track Information (.shp)</title>
+<description>GIS Data last updated Wed, 13 Oct 2021 20:37:46 GMT</description>
+<pubDate>Wed, 13 Oct 2021 20:37:46 GMT</pubDate>
+<link>https://www.nhc.noaa.gov/gis/best_track/ep162021_best_track.zip</link>
+<guid isPermaLink="false">gis-bt-shp-ep162021-Wed, 13 Oct 2021 20:37:46 GMT</guid>
+<author>nhcwebmaster@noaa.gov (NHC Webmaster)</author>
+</item>
+<item>
+<title>Tropical Depression Pamela Best Track Information (.kmz)</title>
+<description>GIS Data last updated Wed, 13 Oct 2021 20:37:47 GMT</description>
+<pubDate>Wed, 13 Oct 2021 20:37:47 GMT</pubDate>
+<link>https://www.nhc.noaa.gov/gis/best_track/ep162021_best_track.kmz</link>
+<guid isPermaLink="false">gis-bt-kml-ep162021-Wed, 13 Oct 2021 20:37:47 GMT</guid>
+<author>nhcwebmaster@noaa.gov (NHC Webmaster)</author>
+</item>
+<item>
+<title>Tropical Depression Pamela Forecast Information (.shp)</title>
+<description>GIS Data last updated Wed, 13 Oct 2021 22:42:50 GMT</description>
+<pubDate>Wed, 13 Oct 2021 22:42:50 GMT</pubDate>
+<link>https://www.nhc.noaa.gov/gis/forecast/archive/ep162021_fcst_latest.zip</link>
+<guid isPermaLink="false">gis-fcst-shp-ep162021-Wed, 13 Oct 2021 22:42:50 GMT</guid>
+<author>nhcwebmaster@noaa.gov (NHC Webmaster)</author>
+</item>
+<item>
+<title>Tropical Depression Pamela Information by ATCF XML Prototype</title>
+<description>Issued at Wed, 13 Oct 2021 20:35:20 GMT. This is only a prototype and the file format may change without notice.</description>
+<pubDate>Wed, 13 Oct 2021 20:35:20 GMT</pubDate>
+<link>https://www.nhc.noaa.gov/storm_graphics/EP16/atcf-ep162021.xml</link>
+<guid isPermaLink="false">atcf-xml-EP162021-15</guid>
+<author>nhcwebmaster@noaa.gov (NHC Webmaster)</author>
+</item>
+</channel>
+</rss>

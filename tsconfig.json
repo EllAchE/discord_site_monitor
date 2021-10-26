@@ -1,0 +1,21 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "downlevelIteration": true,
+    "incremental": true,
+    "lib": [
+      "ES2021"
+    ],
+    "noImplicitReturns": true,
+    "noImplicitAny": false,
+    "noUnusedLocals": true,
+    "outDir": "dist",
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true
+  },
+  "include": [
+    "src",
+    "types"
+  ]
+}
