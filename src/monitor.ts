@@ -54,7 +54,6 @@ client.on('ready', (): void => { // Events when bot comes online
 
 client.on(`messageCreate`, (message: any): void => { // Events on message
   if (!message.content.startsWith(PREFIX) || message.author.bot) return; // Check if message starts with prefix and remove prefix from string
-  logger.info(`[${message.author.tag}]: ${message.content}`);
   const argsTemp = message.content.slice(PREFIX.length).trim();
 
   var args = utils.extractArgumentsFromString(argsTemp); // Split the string in command, and arguments. This part splits on spaces except if it is between quotes ("a b")
