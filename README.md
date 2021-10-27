@@ -1,11 +1,11 @@
-<p align="center">
+<p style="text-align:center">
   <h3 align="center">Discord Site Monitor and Parser</h3>
   <p align="center">A Discord bot that parses sites based on provided configurations and alerts you to those changes.</p>
 </p>
 
-Initial concept and some code borrowed from Noel Vissers' ("Site watcher" project)[https://github.com/noelvissers/site-watcher/releases)]
-
 ---
+## Credit
+<a href="https://github.com/noelvissers/site-watcher/releases">Some code borrowed from Noel Vissers' "Site-watcher" project.</a>
 
 ## Features
 
