@@ -23,18 +23,17 @@ const sitesFile: string = 'src/json/sites.json'; // todo validate that this work
 var sitesToMonitor: Site[] = [];
 var cronInterval: number = 1;
 
-const cronString = `0 */${cronInterval} 6-23 * * *`;
+const cronString = `0 */${cronInterval} 7-19 * * *`;
 
 var client = new Client({
   intents: [
-    //Intents.FLAGS.GUILDS,
-    //Intents.FLAGS.GUILD_MEMBERS,
-    //Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
-    //Intents.FLAGS.GUILD_INTEGRATIONS,
-    //Intents.FLAGS.GUILD_WEBHOOKS,
-    //Intents.FLAGS.DIRECT_MESSAGES,
+    Intents.FLAGS.GUILDS,
+    Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
+    Intents.FLAGS.GUILD_INTEGRATIONS,
+    Intents.FLAGS.GUILD_WEBHOOKS,
+    Intents.FLAGS.DIRECT_MESSAGES,
     Intents.FLAGS.GUILD_MESSAGES,
-    //Intents.FLAGS.GUILD_PRESENCES
+    Intents.FLAGS.GUILD_PRESENCES
   ]
 });
 

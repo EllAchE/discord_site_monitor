@@ -1,15 +1,1 @@
-[
-    {
-        "id": null,
-        "url": null,
-        "alertChannelId": null,
-        "contentSelector": null,
-        "lastChecked": null,
-        "lastUpdated": null,
-        "hash": null,
-        "match": null,
-        "sendAnyChange": null,
-        "sendValueCheck": null,
-        "format": null
-    }
-]
+[]
