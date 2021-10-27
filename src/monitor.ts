@@ -19,7 +19,6 @@ require('dotenv').config();
 logger.info(__dirname)
 
 const sitesFile: string = 'src/json/sites.json'; // todo validate that this works
-const settingsFile: string = 'src/json/settings.json';
 
 var sitesToMonitor: Site[] = [];
 var cronInterval: number = 1;
@@ -28,14 +27,14 @@ const cronString = `0 */${cronInterval} 6-23 * * *`;
 
 var client = new Client({
   intents: [
-    Intents.FLAGS.GUILDS,
-    Intents.FLAGS.GUILD_MEMBERS,
-    Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
-    Intents.FLAGS.GUILD_INTEGRATIONS,
-    Intents.FLAGS.GUILD_WEBHOOKS,
-    Intents.FLAGS.DIRECT_MESSAGES,
+    //Intents.FLAGS.GUILDS,
+    //Intents.FLAGS.GUILD_MEMBERS,
+    //Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
+    //Intents.FLAGS.GUILD_INTEGRATIONS,
+    //Intents.FLAGS.GUILD_WEBHOOKS,
+    //Intents.FLAGS.DIRECT_MESSAGES,
     Intents.FLAGS.GUILD_MESSAGES,
-    Intents.FLAGS.GUILD_PRESENCES
+    //Intents.FLAGS.GUILD_PRESENCES
   ]
 });
 
@@ -43,15 +42,12 @@ client.on('ready', (): void => { // Events when bot comes online
   var tempJson = readJSONSync(sitesFile); // Load saved sites
   sitesToMonitor = [...tempJson];
 
-  cronInterval = readJSONSync(settingsFile).interval; // Load saved settings
-
   if (cronInterval < 60) // Start monitoring
     cronUpdate.setTime(new CronTime(cronString));
   else
     cronUpdate.setTime(new CronTime(`0 * * * * *`));
   cronUpdate.start();
 
-  logger.info(tempJson);
   logger.info(`[${client.user?.tag}] Page monitor bot ready...\n`);
   logger.info(`cron interval is ${cronInterval}`);
   parsePages(true);
@@ -159,7 +155,9 @@ export async function parsePages(isInitialRun: boolean): Promise<void> { // Upda
       }).catch(err => {
         return logger.error(`Error: ${err}. ID: ${site.id}`);
       });
-    })
+    }).catch(err => {
+      return logger.error(`Error: ${err}. ID: ${site.id}`);
+    });
   });
 }
 

@@ -16,7 +16,8 @@ export function extractArgumentsFromString(argsTemp: string): (string | number)[
     return resArr;
 }
 
-export function saveOutputToJsonFile(filePath: string, saveContent: any): void {
+export function saveOutputToJsonFile(filePath: string, saveContent: Site[]): void {
+    saveContent.sort((a, b) => (a.id > b.id) ? 1 : -1)
     outputJSON(filePath, saveContent, { spaces: 2 }, err => {
         if (err)
             logger.error(err);

@@ -7,13 +7,9 @@
         "lastChecked": null,
         "lastUpdated": null,
         "hash": null,
-        "regex": null,
         "match": null,
         "sendAnyChange": null,
         "sendValueCheck": null,
-        "ignoreSmallChanges": null,
-        "index": null,
-        "format": null,
-        "substring": null
+        "format": null
     }
 ]

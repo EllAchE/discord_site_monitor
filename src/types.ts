@@ -46,4 +46,4 @@ export enum BotCommands {
     HELP = "HELP"
 }
 
-export const PREFIX = 'wm!'; //Change to any prefix
+export const PREFIX = 's!'; //Change to any prefix

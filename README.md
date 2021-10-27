@@ -32,7 +32,7 @@ Configuring the bot:
 
 1. Open the `.env` file.
 2. Add `DISCORDJS_BOT_TOKEN=` followed by your discord bot's token. You can get the token from [discord.com/developers/applications](https://discord.com/developers/applications).
-3. If you want to change the prefix (default "`wm!`"), you can change it in `./src/types.ts` (`export const PREFIX = 'wm!';`).
+3. If you want to change the prefix (default "`s!`"), you can change it in `./src/types.ts` (`export const PREFIX = 's!';`).
 
 ## Usage
 1. Invite the bot to your Discord server by replacing `123456789012345678` in the following link with your bot's client id: `https://discord.com/oauth2/authorize?client_id=123456789012345678&scope=bot&permissions=8`. 

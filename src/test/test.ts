@@ -96,6 +96,8 @@ describe('should get substring prefix match', () => {
     })
 })
 
+// todo add command line args on run startup that can be used to specify conditionals
+
 // describe('should get css from index', () => {
 //     const mockSite = getMockSite()
 //     it('should return NO MATCH FOUND when index not specified or negative', () => {
