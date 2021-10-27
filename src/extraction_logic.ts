@@ -18,11 +18,11 @@ export function extractionLogic(site: Site, content: string): string {
         match = iterateThroughJson(["US_MAP_DATA", 60, "tot_cases_last_24_hours"], content)
     }
     else if (site.format == 'css_first' || site.format == 'css_last' || site.sendAnyChange) {
-        match = content.substring(0, 20);
+        match = content.substring(0, 30);
     }
     else {
-        logger.warn("need regex, json pattern or other extraction logic. You got:\n" + content.substring(0, 20)); // default
-        match = content.substring(0, 20);
+        logger.warn("need regex, json pattern or other extraction logic. You got:\n" + content.substring(0, 30)); // default
+        match = content.substring(0, 30);
     }
     if (!match) match = "NO MATCH FOUND"; // probably redundant with previous
 
