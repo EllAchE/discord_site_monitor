@@ -1,5 +1,5 @@
 import { JSDOM } from 'jsdom';
-import { CssIndexSite, PREFIX, Site, SubstringSite } from './types';
+import { PREFIX, Site, SubstringSite } from './types';
 import * as utils from './utils/utils';
 import * as rss from 'rss-parser';
 import { cronUpdate, parsePages } from './monitor';
@@ -19,7 +19,7 @@ export function getSubstringPrefixMatch(site: SubstringSite, responseBody: strin
     return "NO MATCH FOUND";
 }
 
-export function getCssFromIndex(site: CssIndexSite, response: Response, index: number): string | undefined {
+export function getCssFromIndex(site: Site, response: Response, index: number): string | undefined {
     if (!site.index || site.index < 0) {
         logger.warn("to run css_index index must be defined", site.id);
         return "NO MATCH FOUND";
@@ -37,7 +37,9 @@ export async function getLastRss(site: Site, responseBody: string): Promise<stri
     try {
         const parser = new rss();
         const content = await parser.parseString(responseBody);
-        return content.items[0][site.contentSelector]
+        const itemIndex = site.index ? site.index : 0;
+
+        return content.items[itemIndex][site.contentSelector]
     }
     catch {
         logger.warn('error parsing rss on site', site)

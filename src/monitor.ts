@@ -6,7 +6,7 @@ import { Client, Intents, TextChannel, } from 'discord.js';
 import { extractionLogic } from './extraction_logic';
 import * as utils from './utils/utils';
 import * as pdf from 'pdf-parse';
-import { BotCommands, CssIndexSite, PREFIX, Site, SiteFormats, SubstringSite } from './types';
+import { BotCommands, PREFIX, Site, SiteFormats, SubstringSite } from './types';
 import { createHelpEmbed, createNotificationEmbed } from './utils/create_embeds';
 import { initializeClient, saveOutputToJsonFile, shouldIgnoreChange } from './utils/utils';
 import { Response } from 'got/dist/source';
@@ -173,9 +173,9 @@ export async function parseSwitch(site: Site, response: Response): Promise<strin
       content = dom.window.document.querySelector(site.contentSelector)?.textContent;
     } break;
     case SiteFormats.css_index: {
-      const validatedIndex: number = (site as CssIndexSite).index ? (site as CssIndexSite).index : -1;
-      if (typeof ((site as CssIndexSite).index) != "number" || (site as CssIndexSite).index == -1) logger.warn(`index must be defined to run css_index in site ${site.id}`);
-      content = getCssFromIndex((site as CssIndexSite), response, validatedIndex);
+      const validatedIndex: number = site.index ? site.index : -1;
+      if (typeof (site.index) != "number" || site.index == -1) logger.warn(`index must be defined to run css_index in site ${site.id}`);
+      content = getCssFromIndex(site, response, validatedIndex);
     } break;
     case SiteFormats.css_last: {
       const dom = new JSDOM(response.body);

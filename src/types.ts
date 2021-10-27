@@ -10,6 +10,7 @@ export interface Site {
     sendValueCheck: boolean;
     format: SiteFormats;
     base: string;
+    index?: number;
     ignoreSmallChanges?: boolean;
     minDelta?: number;
     regex?: string;
@@ -19,10 +20,6 @@ export interface Site {
 export interface SubstringSite extends Site {
     substring: string;
 }
-
-export interface CssIndexSite extends Site {
-    index: number;
-} // todo fix these so that casting and type inference etc. isn't needed
 
 export enum SiteFormats {
     pdf = "pdf",
