@@ -71,7 +71,7 @@ client.on(`messageCreate`, (message: any): void => { // Events on message
     case BotCommands.STOP:
       stopCron(message);
       break;
-    case BotCommands.STOP:
+    case BotCommands.START:
       startCron(message);
       break;
     case BotCommands.TEST:
@@ -82,6 +82,7 @@ client.on(`messageCreate`, (message: any): void => { // Events on message
       break;
     case BotCommands.ADD:
       // todo this needs to be reimplemented
+      // addSite(message, sitesToMonitor)
       break;
     case BotCommands.HELP:
       message.channel.send({ embeds: [createHelpEmbed()] })
@@ -94,20 +95,16 @@ client.on(`messageCreate`, (message: any): void => { // Events on message
 //Update on set interval
 export const cronUpdate = new CronJob(cronString, function (): void {
   logger.info(`Web mon cron executed at ${new Date().toLocaleString()}`);
-  try {
-    parsePages(false).catch(err => {
-      logger.error("parsePages promise rejected with reason", err);
-    });
-  }
-  catch (err) {
-    logger.error(`cron error`, err)
-  }
+  parsePages().catch(err => {
+    logger.error(`parsePages promise rejected`, err);
+  });
 }, null, false);
 
 
-export async function parsePages(isInitialRun: boolean): Promise<void> { // Update the sites
+export async function parsePages(isInitialRun: boolean = false): Promise<void> { // Update the sites
   var tempJson = readJSONSync(sitesFile);
   sitesToMonitor = [...tempJson];
+
   sitesToMonitor.forEach((site: Site) => {
     got(site.url).then(response => {
       parseSwitch(site, response).then(async (content) => {
@@ -119,30 +116,31 @@ export async function parsePages(isInitialRun: boolean): Promise<void> { // Upda
         if (site.hash != hash) { // Check if new match differs from last match
           site.hash = hash;
           logger.debug(`Site hash changed ${site.id}. Content causing this was:`)
-          logger.debug(content)
+          logger.debug(content) // VERY verbose logs
 
           if (isInitialRun) {
-            utils.saveOutputToJsonFile(sitesFile, sitesToMonitor); // need to save on each iteration so that things are tracked after each change
+            saveOutputToJsonFile(sitesFile, sitesToMonitor); // need to save on each iteration so that things are tracked after each change
             return; // early exit on first run
           }
 
           const channel: TextChannel | undefined = client.channels.cache.get(site.alertChannelId) as TextChannel // customize which channel the alert should appear in. Must be a text channel.
 
           if (channel) {
-            if (site.sendAnyChange) { // send embed
-              var embed = createNotificationEmbed(site, site.lastUpdated);
-              channel.send({ embeds: [embed] }); //Send update to Discord channel
-            }
-
             // separately send parsed content
             if (!site.minDelta) site.minDelta = 0
             if ((site.sendValueCheck && !site.ignoreSmallChanges) || (site.sendValueCheck && site.ignoreSmallChanges && !shouldIgnoreChange(site.base, site.match, site.minDelta))) {
               site.base = site.match; // set base for comparison
-              channel.send(`Extracted ${site.match} from site ${site.id}`);
+              // todo this is where logic to act on a site trigger should be run from
+              channel.send(`${site.match} ${site.extractionMessage} extracted from site ${site.id}`);
+            }
+
+            if (site.sendAnyChange) { // send embed
+              var embed = createNotificationEmbed(site, site.lastUpdated);
+              channel.send({ embeds: [embed] }); //Send update to Discord channel
             }
           }
           else {
-
+            // todo update messaging here (if any)
           }
 
           site.lastUpdated = site.lastChecked // Last change
@@ -151,10 +149,10 @@ export async function parsePages(isInitialRun: boolean): Promise<void> { // Upda
           saveOutputToJsonFile(sitesFile, sitesToMonitor); // need to save on each iteration so that things are tracked after each change
         }
       }).catch(err => {
-        return logger.error(`Error: ${err}. ID: ${site.id}`);
+        return logger.error(`Error in site with ID: ${site.id}`, err);
       });
     }).catch(err => {
-      return logger.error(`Error: ${err}. ID: ${site.id}`);
+      return logger.error(`Error in site with ID: ${site.id}`, err);
     });
   });
 }
@@ -194,7 +192,7 @@ export async function parseSwitch(site: Site, response: Response): Promise<strin
       content = response.body; // will be further extracted in extraction logic functions
     } break;
     default: {
-      throw `need to specify pdf, html or other site type in site ${site.id}`
+      throw Error(`need to specify pdf, html or other site type in site ${site.id}`)
     }
   }
   if (!content) {
@@ -203,7 +201,5 @@ export async function parseSwitch(site: Site, response: Response): Promise<strin
   }
   return content;
 }
-
-
 
 initializeClient(client, process.env.DISCORDJS_BOT_TOKEN?.toString());

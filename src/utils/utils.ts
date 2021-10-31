@@ -20,7 +20,7 @@ export function saveOutputToJsonFile(filePath: string, saveContent: Site[]): voi
     saveContent.sort((a, b) => (a.id > b.id) ? 1 : -1)
     outputJSON(filePath, saveContent, { spaces: 2 }, err => {
         if (err)
-            logger.error(err);
+            logger.error("error saving output to json", err);
     });
 }
 

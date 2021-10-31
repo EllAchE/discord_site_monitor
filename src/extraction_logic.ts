@@ -14,9 +14,6 @@ export function extractionLogic(site: Site, content: string): string {
             return firstMatchList[0];
         }
     }
-    else if (site.format == "json" && site.id == "cdc") {
-        match = iterateThroughJson(["US_MAP_DATA", 60, "tot_cases_last_24_hours"], content)
-    }
     else if (site.format == 'css_first' || site.format == 'css_last' || site.sendAnyChange) {
         match = content.substring(0, 30);
     }
@@ -27,7 +24,7 @@ export function extractionLogic(site: Site, content: string): string {
     if (!match) match = "NO MATCH FOUND"; // probably redundant with previous
 
     return match;
-}
+} // todo want to expose a return type in a triggered change for use in further logic
 
 export function iterateThroughJson(jsonIndices: any[], content: any) {
     const jsonObj = JSON.parse(content);

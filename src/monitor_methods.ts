@@ -8,20 +8,9 @@ import { createMonitorListEmbed } from './utils/create_embeds';
 import { Response } from 'got/dist/source';
 import { logger } from './utils/logger';
 
-export function getSubstringPrefixMatch(site: SubstringSite, responseBody: string): string {
-    if (site.substring) {
-        const indexOfSubString = responseBody.indexOf(site.substring)
-        if (indexOfSubString == -1) {
-            return "NO MATCH FOUND"
-        }
-        return responseBody.substring(indexOfSubString + site.substring.length, indexOfSubString + site.substring.length + 30);
-    }
-    return "NO MATCH FOUND";
-}
-
 export function getCssFromIndex(site: Site, response: Response, index: number): string | undefined {
     if (!site.index || site.index < 0) {
-        logger.warn("to run css_index index must be defined", site.id);
+        logger.warn(`to run css_index index must be defined ${site.id}`);
         return "NO MATCH FOUND";
     }
     else {
@@ -42,12 +31,24 @@ export async function getLastRss(site: Site, responseBody: string): Promise<stri
         return content.items[itemIndex][site.contentSelector]
     }
     catch {
-        logger.warn('error parsing rss on site', site)
-        logger.debug('response body was', responseBody)
+        logger.warn(`error parsing rss on site with id: ${site.id}`)
+        logger.debug(`response body was: ${responseBody}`)
         return "NO MATCH FOUND";
     }
 
 }
+
+export function getSubstringPrefixMatch(site: SubstringSite, responseBody: string): string {
+    if (site.substring) {
+        const indexOfSubString = responseBody.indexOf(site.substring)
+        if (indexOfSubString == -1) {
+            return "NO MATCH FOUND"
+        }
+        return responseBody.substring(indexOfSubString + site.substring.length, indexOfSubString + site.substring.length + 30);
+    }
+    return "NO MATCH FOUND";
+}
+
 
 export function removeSite(args: (string | number)[], message: any, sitesToMonitor: Site[], sitesFile: string): void {
     if (args.length === 0 || typeof args[0] == "number")
@@ -66,9 +67,13 @@ export function removeSite(args: (string | number)[], message: any, sitesToMonit
     }
 }
 
-export function updateSites(message: any, sitesToMonitor: Site[],) {
+export function addSite(message: any, sitesToMonitor: Site[]) {
+    // todo write method
+}
+
+export function updateSites(message: any, sitesToMonitor: Site[]) {
     message.channel.send(`Updating \`${sitesToMonitor.length}\` site(s)...`);
-    parsePages(false);
+    parsePages();
     message.channel.send(`Done...`);
 }
 

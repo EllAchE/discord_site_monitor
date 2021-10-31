@@ -3,4 +3,5 @@ node_modules/
 .vscode/
 *.log
 src/json/sites.json
+src/json/new-sites.json
 .env

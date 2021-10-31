@@ -10,6 +10,7 @@ export interface Site {
     sendValueCheck: boolean;
     format: SiteFormats;
     base: string;
+    extractionMessage?: string,
     index?: number;
     ignoreSmallChanges?: boolean;
     minDelta?: number;
