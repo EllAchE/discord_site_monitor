@@ -84,7 +84,6 @@ describe('should get substring prefix match', () => {
         expect(getSubstringPrefixMatch(mockSite, "alphabet response string")).toBe("string")
     })
 
-
     it('should return NO MATCH FOUND when there is no match', () => {
         mockSite.substring = "one "
         expect(getSubstringPrefixMatch(mockSite, "response string")).toBe("NO MATCH FOUND")

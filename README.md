@@ -12,17 +12,15 @@
 Notify you in Discord when a website changes:   
 ![site-watcher](./.github/pictures/site-watcher.png)   
    
-- Add multiple sites to watcher
 - Support a variety of formats, i.e. rss, pdf, html, json etc.
-- Remove site from watcher
-- Monitoring specified elements of a site, to not get notified on dynamic elements (ex. ads)
-- Checking on a specified interval (1-60 minutes, default `1`).
-- Manually update tracked sites
-- Show list of tracked sites
+- Extract specific values from the site, and trigger alerts based on those values
+- Add multiple sites to watcher
+- Checks on a specified interval (cronjob, currently configured in the source code)).
+- Update tracked sites via modification of the underlying json or via bot commands
 - Open source!
 
 ## Setup
-*These instructions are pretty sparse, requires some solid knowledge of typescript. I also didn't write a usage section yet. If someone is actually interested in using this I can put one together.
+*These instructions are pretty sparse/a WIP and require some knowledge of typescript. I also didn't complete a usage section yet. If someone is interested in using this I can put one together.
 
 
 1. Create a discord bot [discord.com/developers/applications](https://discord.com/developers/applications). A tutorial can be found [here](https://discordpy.readthedocs.io/en/latest/discord.html).   
@@ -52,21 +50,16 @@ None.
 
 ---
 
-### `!add <URL> "<CSS SELECTOR>"`
+### `!add <URL>`
 Adds a website to the list.
 
 **Parameters**   
 Required:   
 `URL` The URL of the site you want to track.   
 
-Optional:   
-`"CONTENT SELECTOR"` The part of the site you want to track. (By default the \<head\> of the site is tracked).   
-<sub>**Make sure to use double quotation marks when using this parameter.**   
-In Chrome, this can be obtained by right clicking the part of the site you want to track and selecting: `Inspect`. After this you see the element highlighted in the developer view. You can right click on the element and select `Copy → Copy selector`. </sub>
-
 **Example**   
 `!add https://google.com/` This tracks changes on https://google.com/.   
-<sub>Note that some sites, including Google.com have dynamic elements (like ads) that cause a change every time its checked. To make sure this is filtered out, use the css selector parameter.</sub>   
+<sub>Note that some sites, including Google.com have dynamic elements (like ads) that cause a change every time its checked. To make sure these dynamic elements are filtered out, use the css selector parameter.</sub>   
 
 `!add https://example.com/ "body > div > h1"` This tracks changes in header 1 of the site https://example.com/.
 
@@ -75,15 +68,15 @@ In Chrome, this can be obtained by right clicking the part of the site you want 
 
 ---
 
-### `!remove <NUMBER>`
+### `!remove <INDEX>`
 Removes a website from the list.
 
 **Parameters**   
 Required:   
-`NUMBER` The number of the site you want to remove. Use `!list` to see the number of the site(s).   
+`INDEX` The index of the site you want to remove. Use `!list` to see the number of the site(s). NOTE - the list indexs are 1 indexed but you *must pass a zero indexed value to remove a site*
 
 **Example**   
-`!remove 1` This removes the first site in the list (`!list`).
+`!remove 0` This removes the first site in the list (`!list`).
 
 **Output**   
 ![remove](./.github/pictures/remove.png)
@@ -91,16 +84,31 @@ Required:
 ---
 
 ### `!list`
-Shows the list of websites being watched.
+Sends the list of websites being watched.
 
 **Parameters**   
 None.
 
 **Example**   
-`!list` This shows the list of websites being watched.
+`!list` This sends the list of websites being watched.
 
 **Output**   
 ![list](./.github/pictures/list.png)
+
+---
+
+### `!listv`
+Sends a verbose message with details for each of websites being watched.
+
+**Parameters**   
+None.
+
+**Example**   
+`!listv` This sends a verbose list of websites being watched. Verbose includes the full json configuration for each site.
+
+**Output**   
+![list](./.github/pictures/list.png)
+
 
 ---
 
@@ -167,9 +175,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 
 
-# Creating a config file
+# Creating a config/sites file
 
-A config object looks something like this:
+A config/site object looks something like this:
 
   {
     "id": "jobless",
@@ -194,3 +202,5 @@ The arguments to care about are:
 *sendAnyChange*: If true will send the result of any update (yes or no), if false will only send an alert if the designated condition is met. You would have to define a null return for the failure condition (or false/undefined) to avoid triggering the send
 *index*: if using css all will select the nth element as specified
 *format*: Options are (currently): json, pdf, rss, css and cssall. They are what they say, cssall simply distinguishes if the queryselector will have multiple returns and if index is therefore necessary(or not)
+
+## WIP, many features have been added/adapted since I last updated this page
