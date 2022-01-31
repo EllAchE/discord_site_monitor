@@ -3,25 +3,25 @@ import { outputJSON } from 'fs-extra';
 import { Site, SiteFormats } from '../types';
 import { logger } from './logger';
 
-export function extractArgumentsFromString(argsTemp: string): (string | number)[] {
-    var regexp: RegExp = /[^\s"]+|"([^"]*)"/gi;
-    let match;
-    const resArr: string[] = [];
-    do {
-        match = regexp.exec(argsTemp);
-        if (match != null) {
-            resArr.push(match[1] ? match[1] : match[0]);
-        }
-    } while (match != null);
-    return resArr;
-}
-
 export function saveOutputToJsonFile(filePath: string, saveContent: Site[]): void {
     saveContent.sort((a, b) => (a.id > b.id) ? 1 : -1)
     outputJSON(filePath, saveContent, { spaces: 2 }, err => {
         if (err)
             logger.error("error saving output to json", err);
     });
+}
+// TODO if reading/writing to json breaks firebase, or is too expensive, read from redis
+
+export function getRedisClient() {
+ const client = createClient()
+}
+
+export function writeToRedis() {
+    return;
+}
+
+export function readFromRedis() {
+    return;
 }
 
 export function shouldIgnoreChange(base: string, match: string, minDelta: number) {

@@ -1,4 +1,3 @@
-import { CronJob, CronTime } from 'cron';
 import { readJSONSync } from 'fs-extra';
 import { JSDOM } from 'jsdom';
 import { createHash } from 'crypto';
@@ -21,9 +20,7 @@ logger.info(__dirname)
 const sitesFile: string = 'src/json/sites.json'; // todo validate that this works
 
 var sitesToMonitor: Site[] = [];
-var cronInterval: number = 1;
 
-const cronString = `0 */${cronInterval} 7-19 * * *`;
 
 var client = new Client({
   intents: [
@@ -41,65 +38,9 @@ client.on('ready', (): void => { // Events when bot comes online
   var tempJson = readJSONSync(sitesFile); // Load saved sites
   sitesToMonitor = [...tempJson];
 
-  if (cronInterval < 60) // Start monitoring
-    cronUpdate.setTime(new CronTime(cronString));
-  else
-    cronUpdate.setTime(new CronTime(`0 * * * * *`));
-  cronUpdate.start();
-
   logger.info(`[${client.user?.tag}] Page monitor bot ready...\n`);
-  logger.info(`cron interval is ${cronInterval}`);
   parsePages(true);
 })
-
-client.on(`messageCreate`, (message: any): void => { // Events on message
-  if (!message.content.startsWith(PREFIX) || message.author.bot) return; // Check if message starts with prefix and remove prefix from string
-  const argsTemp = message.content.slice(PREFIX.length).trim();
-
-  var args = utils.extractArgumentsFromString(argsTemp); // Split the string in command, and arguments. This part splits on spaces except if it is between quotes ("a b")
-
-  const CMD_NAME = args.shift()?.toString().toLowerCase(); // Ignore command case mismatch
-  logger.info(CMD_NAME)
-
-  switch (CMD_NAME?.toUpperCase()) {
-    case BotCommands.LIST:
-      listMonitoredSites(message, sitesToMonitor);
-      break;
-    case BotCommands.REMOVE:
-      removeSite(args, message, sitesToMonitor, sitesFile);
-      break;
-    case BotCommands.STOP:
-      stopCron(message);
-      break;
-    case BotCommands.START:
-      startCron(message);
-      break;
-    case BotCommands.TEST:
-      testSites(sitesToMonitor, sitesFile);
-      break;
-    case BotCommands.UPDATE:
-      updateSites(message, sitesToMonitor);
-      break;
-    case BotCommands.ADD:
-      // todo this needs to be reimplemented
-      // addSite(message, sitesToMonitor)
-      break;
-    case BotCommands.HELP:
-      message.channel.send({ embeds: [createHelpEmbed()] })
-      break;
-    default:
-      message.channel.send(`Invalid command...\nType \`${PREFIX}help\` for a list of commands.`)
-  }
-})
-
-//Update on set interval
-export const cronUpdate = new CronJob(cronString, function (): void {
-  logger.info(`Web mon cron executed at ${new Date().toLocaleString()}`);
-  parsePages().catch(err => {
-    logger.error(`parsePages promise rejected`, err);
-  });
-}, null, false);
-
 
 export async function parsePages(isInitialRun: boolean = false): Promise<void> { // Update the sites
   var tempJson = readJSONSync(sitesFile);
