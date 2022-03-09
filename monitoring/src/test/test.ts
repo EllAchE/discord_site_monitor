@@ -1,4 +1,4 @@
-import { cleanNumberString, extractArgumentsFromString, shouldIgnoreChange } from "../utils/utils";
+import { cleanNumberString, shouldIgnoreChange } from "../utils/utils";
 import { getEmptyMockSite } from "./testHelpers";
 import { readFileSync } from 'fs-extra';
 import { getLastRss, getSubstringPrefixMatch } from "../monitor_methods";
@@ -95,6 +95,10 @@ describe('should get substring prefix match', () => {
     })
 })
 
+
+function extractArgumentsFromString(arg0: string): any {
+    throw new Error("Function not implemented.");
+}
 // todo add command line args on run startup that can be used to specify conditionals
 
 // describe('should get css from index', () => {

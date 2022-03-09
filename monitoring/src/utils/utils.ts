@@ -12,10 +12,6 @@ export function saveOutputToJsonFile(filePath: string, saveContent: Site[]): voi
 }
 // TODO if reading/writing to json breaks firebase, or is too expensive, read from redis
 
-export function getRedisClient() {
- const client = createClient()
-}
-
 export function writeToRedis() {
     return;
 }

@@ -3,13 +3,12 @@ import { JSDOM } from 'jsdom';
 import { createHash } from 'crypto';
 import { Client, Intents, TextChannel, } from 'discord.js';
 import { extractionLogic } from './extraction_logic';
-import * as utils from './utils/utils';
 import * as pdf from 'pdf-parse';
-import { BotCommands, PREFIX, Site, SiteFormats, SubstringSite } from './types';
-import { createHelpEmbed, createNotificationEmbed } from './utils/create_embeds';
+import { Site, SiteFormats, SubstringSite } from './types';
+import { createNotificationEmbed } from './utils/create_embeds';
 import { initializeClient, saveOutputToJsonFile, shouldIgnoreChange } from './utils/utils';
 import { Response } from 'got/dist/source';
-import { getCssFromIndex, getLastRss, getSubstringPrefixMatch, listMonitoredSites, removeSite, startCron, stopCron, testSites, updateSites } from './monitor_methods'
+import { getCssFromIndex, getLastRss, getSubstringPrefixMatch } from './monitor_methods'
 import { logger } from './utils/logger';
 
 const got = require('got');

@@ -9,7 +9,7 @@
     "noImplicitReturns": true,
     "noImplicitAny": false,
     "noUnusedLocals": true,
-    "outDir": "dist",
+    "outDir": "monitoring/dist",
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true
