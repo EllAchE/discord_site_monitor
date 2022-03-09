@@ -10,13 +10,14 @@ import { initializeClient, saveOutputToJsonFile, shouldIgnoreChange } from './ut
 import { Response } from 'got/dist/source';
 import { getCssFromIndex, getLastRss, getSubstringPrefixMatch } from './monitor_methods'
 import { logger } from './utils/logger';
+import { CLIENT } from './redis';
 
 const got = require('got');
 require('dotenv').config();
 
 logger.info(__dirname)
 
-const sitesFile: string = 'src/json/sites.json'; // todo validate that this works
+const sitesFile: string = 'src/json/sites.json';
 
 var sitesToMonitor: Site[] = [];
 
@@ -43,7 +44,14 @@ client.on('ready', (): void => { // Events when bot comes online
 
 export async function parsePages(isInitialRun: boolean = false): Promise<void> { // Update the sites
   var tempJson = readJSONSync(sitesFile);
-  sitesToMonitor = [...tempJson];
+
+  // https://redis.io/commands/scan
+  // https://github.com/redis/node-redis#scan-iterator
+  for await (const key of CLIENT.scanIterator()) {
+    CLIENT.get(key).then(
+      // LOGIC here
+    );
+  }
 
   sitesToMonitor.forEach((site: Site) => {
     got(site.url).then(response => {
@@ -109,9 +117,7 @@ export async function parseSwitch(site: Site, response: Response): Promise<strin
       content = dom.window.document.querySelector(site.contentSelector)?.textContent;
     } break;
     case SiteFormats.css_index: {
-      const validatedIndex: number = site.index ? site.index : -1;
-      if (typeof (site.index) != "number" || site.index == -1) logger.warn(`index must be defined to run css_index in site ${site.id}`);
-      content = getCssFromIndex(site, response, validatedIndex);
+      content = getCssFromIndex(site, response);
     } break;
     case SiteFormats.css_last: {
       const dom = new JSDOM(response.body);

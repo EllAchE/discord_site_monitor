@@ -5,14 +5,17 @@ import { parsePages } from './monitor';
 import { Response } from 'got/dist/source';
 import { logger } from './utils/logger';
 
-export function getCssFromIndex(site: Site, response: Response, index: number): string | undefined {
+export function getCssFromIndex(site: Site, response: Response): string | undefined {
+    const validatedIndex: number = site.index ? site.index : -1;
+    if (typeof (site.index) != "number" || site.index == -1) logger.warn(`index must be defined to run css_index in site ${site.id}`);
+
     if (!site.index || site.index < 0) {
         logger.warn(`to run css_index index must be defined ${site.id}`);
         return "NO MATCH FOUND";
     }
     else {
         const dom = new JSDOM(response.body);
-        return dom.window.document.querySelectorAll(site.contentSelector)[index]?.textContent;
+        return dom.window.document.querySelectorAll(site.contentSelector)[validatedIndex]?.textContent;
     }
 }
 
