@@ -10,7 +10,7 @@ import { initializeClient, saveOutputToJsonFile, shouldIgnoreChange } from './ut
 import { Response } from 'got/dist/source';
 import { getCssFromIndex, getLastRss, getSubstringPrefixMatch } from './monitor_methods'
 import { logger } from './utils/logger';
-import { CLIENT } from './redis';
+import { CLIENT, writeToRedis } from './redis';
 
 const got = require('got');
 require('dotenv').config();
@@ -43,7 +43,8 @@ client.on('ready', (): void => { // Events when bot comes online
 })
 
 export async function parsePages(isInitialRun: boolean = false): Promise<void> { // Update the sites
-  var tempJson = readJSONSync(sitesFile);
+  // reads site file and initializes the client with the data from sites in it
+  await writeToRedis();
 
   // https://redis.io/commands/scan
   // https://github.com/redis/node-redis#scan-iterator
