@@ -1,7 +1,6 @@
-import { Site } from '../types';
 import { MessageEmbed } from 'discord.js';
 
-export function createNotificationEmbed(site: Site, prevUpdate: string): MessageEmbed {
+export function createNotificationEmbed(site: {[x: string]: string}, prevUpdate: string): MessageEmbed {
     var embed = new MessageEmbed();
     embed.setTitle(`🔎 ${site.id} changed!`);
     embed.setURL(site.url);

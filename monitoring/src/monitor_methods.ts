@@ -1,15 +1,15 @@
 import { JSDOM } from 'jsdom';
-import { Site, SubstringSite } from './types';
+import { Site } from './types';
 import * as rss from 'rss-parser';
 import { parsePages } from './monitor';
 import { Response } from 'got/dist/source';
 import { logger } from './utils/logger';
 
-export function getCssFromIndex(site: Site, response: Response): string | undefined {
-    const validatedIndex: number = site.index ? site.index : -1;
+export function getCssFromIndex(site: {[x: string]: string}, response: Response): string | undefined {
+    const validatedIndex: number = site.index ? parseInt(site.index) : -1;
     if (typeof (site.index) != "number" || site.index == -1) logger.warn(`index must be defined to run css_index in site ${site.id}`);
 
-    if (!site.index || site.index < 0) {
+    if (!site.index || parseInt(site.index) < 0) {
         logger.warn(`to run css_index index must be defined ${site.id}`);
         return "NO MATCH FOUND";
     }
@@ -19,7 +19,7 @@ export function getCssFromIndex(site: Site, response: Response): string | undefi
     }
 }
 
-export async function getLastRss(site: Site, responseBody: string): Promise<string> {
+export async function getLastRss(site: {[x: string]: string}, responseBody: string): Promise<string> {
     if (!site.contentSelector) {
         return "NO MATCH FOUND";
     }
@@ -38,7 +38,7 @@ export async function getLastRss(site: Site, responseBody: string): Promise<stri
 
 }
 
-export function getSubstringPrefixMatch(site: SubstringSite, responseBody: string): string {
+export function getSubstringPrefixMatch(site: {[x: string]: string}, responseBody: string): string {
     if (site.substring) {
         const indexOfSubString = responseBody.indexOf(site.substring)
         if (indexOfSubString == -1) {

@@ -4,7 +4,7 @@ import { createHash } from 'crypto';
 import { Client, Intents, TextChannel, } from 'discord.js';
 import { extractionLogic } from './extraction_logic';
 import * as pdf from 'pdf-parse';
-import { Site, SiteFormats, SubstringSite } from './types';
+import { Site, SiteFormats  } from './types';
 import { createNotificationEmbed } from './utils/create_embeds';
 import { initializeClient, saveOutputToJsonFile, shouldIgnoreChange } from './utils/utils';
 import { Response } from 'got/dist/source';
@@ -48,64 +48,66 @@ export async function parsePages(isInitialRun: boolean = false): Promise<void> {
   // https://redis.io/commands/scan
   // https://github.com/redis/node-redis#scan-iterator
   for await (const key of CLIENT.scanIterator()) {
-    CLIENT.get(key).then(
-      // LOGIC here
-    );
-  }
-
-  sitesToMonitor.forEach((site: Site) => {
-    got(site.url).then(response => {
-      parseSwitch(site, response).then(async (content) => {
-        const hash = createHash(`md5`).update(content.toString()).digest(`hex`); //Get content of site
-
-        site.lastChecked = new Date().toLocaleString(); //Update time to last check
-        site.match = extractionLogic(site, content);
-
-        if (site.hash != hash) { // Check if new match differs from last match
-          site.hash = hash;
-          logger.debug(`Site hash changed ${site.id}. Content causing this was:`)
-          logger.debug(content) // VERY verbose logs
-
-          if (isInitialRun) {
+    CLIENT.hGetAll(key).then((site) => {
+      got(site.url).then(response => {
+        parseSwitch(site, response).then(async (content) => {
+          const hash = createHash(`md5`).update(content.toString()).digest(`hex`); //Get content of site
+  
+          site.lastChecked = new Date().toLocaleString(); //Update time to last check
+          site.match = extractionLogic(site, content);
+  
+          if (site.hash != hash) { // Check if new match differs from last match
+            site.hash = hash;
+            logger.debug(`Site hash changed ${site.id}. Content causing this was:`)
+            logger.debug(content) // VERY verbose logs
+  
+            if (isInitialRun) {
+              saveOutputToJsonFile(sitesFile, sitesToMonitor); // need to save on each iteration so that things are tracked after each change
+              return; // early exit on first run
+            }
+  
+            const channel: TextChannel | undefined = client.channels.cache.get(site.alertChannelId) as TextChannel // customize which channel the alert should appear in. Must be a text channel.
+  
+            if (channel) {
+              // separately send parsed content
+              if (!site.minDelta) site.minDelta = "0"
+              if ((site.sendValueCheck === "true" && site.ignoreSmallChanges === "false") || (site.sendValueCheck === "true" && site.ignoreSmallChanges === "true" && !shouldIgnoreChange(site.base, site.match, parseFloat(site.minDelta)))) {
+                site.base = site.match; // set base for comparison
+                // todo this is where logic to act on a site trigger should be run from
+                channel.send(`${site.match} ${site.extractionMessage} extracted from site ${site.id}`);
+              }
+  
+              if (site.sendAnyChange === "true") { // send embed
+                var embed = createNotificationEmbed(site, site.lastUpdated);
+                channel.send({ embeds: [embed] }); //Send update to Discord channel
+              }
+            }
+            else {
+              // todo update messaging here (if any)
+            }
+  
+            site.lastUpdated = site.lastChecked // Last change
+            site.hash = hash;
+  
             saveOutputToJsonFile(sitesFile, sitesToMonitor); // need to save on each iteration so that things are tracked after each change
-            return; // early exit on first run
           }
-
-          const channel: TextChannel | undefined = client.channels.cache.get(site.alertChannelId) as TextChannel // customize which channel the alert should appear in. Must be a text channel.
-
-          if (channel) {
-            // separately send parsed content
-            if (!site.minDelta) site.minDelta = 0
-            if ((site.sendValueCheck && !site.ignoreSmallChanges) || (site.sendValueCheck && site.ignoreSmallChanges && !shouldIgnoreChange(site.base, site.match, site.minDelta))) {
-              site.base = site.match; // set base for comparison
-              // todo this is where logic to act on a site trigger should be run from
-              channel.send(`${site.match} ${site.extractionMessage} extracted from site ${site.id}`);
-            }
-
-            if (site.sendAnyChange) { // send embed
-              var embed = createNotificationEmbed(site, site.lastUpdated);
-              channel.send({ embeds: [embed] }); //Send update to Discord channel
-            }
-          }
-          else {
-            // todo update messaging here (if any)
-          }
-
-          site.lastUpdated = site.lastChecked // Last change
-          site.hash = hash;
-
-          saveOutputToJsonFile(sitesFile, sitesToMonitor); // need to save on each iteration so that things are tracked after each change
-        }
+        }).catch(err => {
+          return logger.error(`Error in site with ID: ${site.id}`, err);
+        });
       }).catch(err => {
         return logger.error(`Error in site with ID: ${site.id}`, err);
       });
-    }).catch(err => {
-      return logger.error(`Error in site with ID: ${site.id}`, err);
+    }).catch((err) => {
+      logger.error(err)
     });
+  }
+
+  sitesToMonitor.forEach((site: Site) => {
+
   });
 }
 
-export async function parseSwitch(site: Site, response: Response): Promise<string> {
+export async function parseSwitch(site: {[x: string]: string}, response: Response): Promise<string> {
   let content;
   switch (site.format) {
     case SiteFormats.pdf: {
@@ -129,7 +131,7 @@ export async function parseSwitch(site: Site, response: Response): Promise<strin
       content = dom.window.document.querySelector(site.contentSelector)?.outerHTML;
     } break;
     case SiteFormats.substring: {
-      content = getSubstringPrefixMatch((site as SubstringSite), (response.body as any).toString());
+      content = getSubstringPrefixMatch(site, (response.body as any).toString());
     } break;
     case SiteFormats.rss: {
       content = getLastRss(site, (response.body as any).toString());

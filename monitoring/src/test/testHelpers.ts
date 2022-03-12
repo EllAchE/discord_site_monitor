@@ -1,6 +1,6 @@
-import { SubstringSite, Site, SiteFormats } from "../types";
+import { Site, SiteFormats } from "../types";
 
-export const getEmptyMockSite = (): SubstringSite => {
+export const getEmptyMockSite = ():{[x: string]: string} => {
     return {
         contentSelector: "",
         id: "",
@@ -10,13 +10,13 @@ export const getEmptyMockSite = (): SubstringSite => {
         lastUpdated: "",
         hash: "",
         match: "",
-        sendAnyChange: false,
-        sendValueCheck: false,
-        ignoreSmallChanges: false,
+        sendAnyChange: "false",
+        sendValueCheck: "false",
+        ignoreSmallChanges: "false",
         format: SiteFormats.substring,
         substring: "",
         base: "",
-        minDelta: 0
+        minDelta: "0"
     }
 }
 

@@ -1,7 +1,6 @@
-import { Site } from './types';
 import { logger } from './utils/logger';
 
-export function extractionLogic(site: Site, content: string): string {
+export function extractionLogic(site: {[x: string]: string}, content: string): string {
     let match;
     if (site.regex) {
         const regPtn = new RegExp(site.regex);
@@ -14,7 +13,7 @@ export function extractionLogic(site: Site, content: string): string {
             return firstMatchList[0];
         }
     }
-    else if (site.format == 'css_first' || site.format == 'css_last' || site.sendAnyChange) {
+    else if (site.format == 'css_first' || site.format == 'css_last' || site.sendAnyChange === "true") {
         match = content.substring(0, 30);
     }
     else {
