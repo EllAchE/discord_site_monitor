@@ -32,8 +32,6 @@ var DISCORD_CLIENT = new Client({
 });
 
 const cronUpdate = new CronJob(cronString, function (): void {
-  console.log("cron executed");
-  
   parsePages().catch(err => {
     console.error("parsePages promise rejected with reason", err);
   });
