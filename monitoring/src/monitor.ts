@@ -10,8 +10,12 @@ import { createHash } from 'crypto';
 import { extractionLogic } from './extraction_logic';
 import { createNotificationEmbed } from './utils/create_embeds';
 import { shouldIgnoreChange } from './utils/utils';
+import { CronJob, CronTime } from 'cron';
 
 require('dotenv').config();
+
+const cronInterval: number = 1;
+const cronString = `0 */${cronInterval} * * * *`;
 
 logger.info(__dirname)
 
@@ -27,8 +31,21 @@ var DISCORD_CLIENT = new Client({
   ]
 });
 
+const cronUpdate = new CronJob(cronString, function (): void {
+  parsePages().catch(err => {
+    console.error("parsePages promise rejected with reason", err);
+  });
+}, null, false);
+
 DISCORD_CLIENT.on('ready', (): void => { // Events when bot comes online
   logger.info(`[${DISCORD_CLIENT.user?.tag}] Page monitor bot ready...\n`);
+  if (cronInterval < 60) {
+    cronUpdate.setTime(new CronTime(cronString));
+  }
+  else {
+    cronUpdate.setTime(new CronTime(`0 * * * * *`));
+  }
+    cronUpdate.start();
   parsePages();
 })
 
