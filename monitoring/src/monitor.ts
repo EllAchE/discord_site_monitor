@@ -5,7 +5,7 @@ import { SiteFormats  } from './types';
 import got, { Response } from 'got';
 import { getCssFromIndex, getLastRss, getSubstringPrefixMatch } from './monitor_methods'
 import { logger } from './utils/logger';
-import { initializeRedisAndDiscordClients, REDIS_CLIENT, writeSingleSiteToRedis, writeSiteJsonToRedis } from './redisMethods';
+import { initializeRedisAndDiscordClients, REDIS_CLIENT, writeSingleSiteToRedis } from './redisMethods';
 import { createHash } from 'crypto';
 import { extractionLogic } from './extraction_logic';
 import { createNotificationEmbed } from './utils/create_embeds';
@@ -34,7 +34,6 @@ DISCORD_CLIENT.on('ready', (): void => { // Events when bot comes online
 
 export async function parsePages(): Promise<void> { // Update the sites
   // reads site file and initializes the client with the data from sites in it
-  await writeSiteJsonToRedis();
 
   // https://redis.io/commands/scan
   // https://github.com/redis/node-redis#scan-iterator
@@ -50,6 +49,9 @@ export async function parsePages(): Promise<void> { // Update the sites
     
             if (site.hash != hash) { // Check if new match differs from last match
               site.hash = hash;
+              logger.info('Changed site hash')
+              logger.info(site.id)
+              logger.info(site.hash)
               const channel: TextChannel = DISCORD_CLIENT.channels.cache.get(site.alertChannelId) as TextChannel // customize which channel the alert should appear in. Must be a text channel.
     
               if (!site.minDelta) {
@@ -68,7 +70,6 @@ export async function parsePages(): Promise<void> { // Update the sites
               }
     
               site.lastUpdated = site.lastChecked // Last change
-
               writeSingleSiteToRedis(site, site.id)
             }
           }).catch(err => {

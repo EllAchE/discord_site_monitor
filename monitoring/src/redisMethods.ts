@@ -26,6 +26,9 @@ export async function initializeRedisAndDiscordClients(client: Client, botToken:
   
     await REDIS_CLIENT.connect();
     logger.info("Redis client connected")
+
+    await writeSiteJsonToRedis();
+    logger.info("initialized client with json redis")
   
     if (botToken) {
         client.login(botToken)
