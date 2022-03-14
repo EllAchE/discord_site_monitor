@@ -32,6 +32,8 @@ var DISCORD_CLIENT = new Client({
 });
 
 const cronUpdate = new CronJob(cronString, function (): void {
+  console.log("cron executed");
+  
   parsePages().catch(err => {
     console.error("parsePages promise rejected with reason", err);
   });
@@ -66,9 +68,6 @@ export async function parsePages(): Promise<void> { // Update the sites
     
             if (site.hash != hash) { // Check if new match differs from last match
               site.hash = hash;
-              logger.info('Changed site hash')
-              logger.info(site.id)
-              logger.info(site.hash)
               const channel: TextChannel = DISCORD_CLIENT.channels.cache.get(site.alertChannelId) as TextChannel // customize which channel the alert should appear in. Must be a text channel.
     
               if (!site.minDelta) {
