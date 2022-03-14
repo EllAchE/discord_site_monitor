@@ -2,6 +2,6 @@ dist
 node_modules/
 .vscode/
 *.log
-monitoring/src/json/sites.json
-monitoring/src/json/new-sites.json
+!monitoring/src/json/sample-sites.json
+monitoring/src/json/**
 .env
