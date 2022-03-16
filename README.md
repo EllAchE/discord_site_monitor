@@ -1,6 +1,6 @@
 <p style="text-align:center">
   <h3 align="center">Discord Site Monitor and Parser</h3>
-  <p align="center">A Discord bot that parses responses from any arbitray url and 1. alerts you to those changes, and 2. optionally extracts data from those sites.</p>
+  <p align="center">A Discord bot that parses responses from any arbitray url then alerts you to those changes and optionally extracts desired data.</p>
 </p>
 
 ---
