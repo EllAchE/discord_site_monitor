@@ -65,6 +65,7 @@ export async function parsePages(): Promise<void> { // Update the sites
             site.match = extractionLogic(site, content);
     
             if (site.hash != hash) { // Check if new match differs from last match
+              logger.info(`Site changed! ${site.id}`)
               site.hash = hash;
               const channel: TextChannel = DISCORD_CLIENT.channels.cache.get(site.alertChannelId) as TextChannel // customize which channel the alert should appear in. Must be a text channel.
     

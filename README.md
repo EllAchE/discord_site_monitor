@@ -38,6 +38,7 @@ Configuring the bot:
 
 1. Invite the bot to your Discord server by replacing `123456789012345678` in the following link with your bot's client id: `https://discord.com/oauth2/authorize?client_id=123456789012345678&scope=bot&permissions=8`.
 2. Create a site config file called `sites.json` at the path src/json/sites.json. Follow the example shown in `sample-sites.json` to populate the file, OR...
+   \*\*\* Since the original version of this bot there have been major refactors to change what constitutes a valid site file. JSON arrays now have to be saved as strings so that redis can properly store and retrieve them. The reason redis arrays are not used is to preserve numeric indices wherever those are set
 3. Run the bot via node then add a website with the `!add <URL>` command. //(Still needs to be implemented)
 
 For all other options, see [Commands](#Commands).

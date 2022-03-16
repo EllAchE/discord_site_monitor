@@ -7,9 +7,8 @@ import { logger } from './utils/logger';
 
 export function getCssFromIndex(site: {[x: string]: string}, response: Response): string | undefined {
     const validatedIndex: number = site.index ? parseInt(site.index) : -1;
-    if (typeof (site.index) != "number" || site.index == -1) logger.warn(`index must be defined to run css_index in site ${site.id}`);
 
-    if (!site.index || parseInt(site.index) < 0) {
+    if (!validatedIndex || validatedIndex < 0) {
         logger.warn(`to run css_index index must be defined ${site.id}`);
         return "NO MATCH FOUND";
     }

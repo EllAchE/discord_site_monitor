@@ -10,8 +10,13 @@ import { Client } from "discord.js";
     var tempJson: {[x: string]: string}[] = readJSONSync('src/json/sites.json');
   
     for (const site of tempJson) {
-      writeSingleSiteToRedis(site, site.id);
+        console.log(site)
+        writeSingleSiteToRedis(site, site.id);
     }
+}
+
+export async function resetRedis() {
+    await REDIS_CLIENT.FLUSHALL()
 }
 
 export async function writeSingleSiteToRedis(site: {[x: string]: string}, id: string) {
@@ -27,6 +32,7 @@ export async function initializeRedisAndDiscordClients(client: Client, botToken:
     await REDIS_CLIENT.connect();
     logger.info("Redis client connected")
 
+    await resetRedis();
     await writeSiteJsonToRedis();
     logger.info("initialized client with json redis")
   

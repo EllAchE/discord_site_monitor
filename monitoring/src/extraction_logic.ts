@@ -1,7 +1,9 @@
+import { SiteFormats } from './types';
 import { logger } from './utils/logger';
 
 export function extractionLogic(site: {[x: string]: string}, content: string): string {
     let match;
+
     if (site.regex) {
         const regPtn = new RegExp(site.regex);
         let firstMatchList = regPtn.exec(content);
@@ -13,10 +15,15 @@ export function extractionLogic(site: {[x: string]: string}, content: string): s
             return firstMatchList[0];
         }
     }
-    else if (site.format == 'css_first' || site.format == 'css_last' || site.sendAnyChange === "true") {
+
+    else if (site.format == SiteFormats.json) {
+        match = iterateThroughJson(JSON.parse(site.jsonIndices), content)
+    }
+    else if (site.format == SiteFormats.css_first || site.format == SiteFormats.css_last || site.format === SiteFormats.css_index || site.sendAnyChange === "true") {
         match = content.substring(0, 30);
     }
     else {
+        logger.warn(site.format); // default
         logger.warn("need regex, json pattern or other extraction logic. You got:\n" + content.substring(0, 30)); // default
         match = content.substring(0, 30);
     }
@@ -31,5 +38,6 @@ export function iterateThroughJson(jsonIndices: any[], content: any) {
     jsonIndices.forEach((objIndex) => {
         match = match[objIndex]
     })
+
     return match;
 }
