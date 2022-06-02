@@ -1,6 +1,6 @@
 <p style="text-align:center">
   <h3 align="center">Discord Site Monitor and Parser</h3>
-  <p align="center">A Discord bot that parses responses from any arbitrary url then alerts you to those changes and optionally extracts desired data.</p>
+  <p align="center"> Scrapes webpages in (almost) any web format, then sends discord notifications based on extracted data and customizable logic.</p>
 </p>
 
 ---
@@ -11,19 +11,14 @@
 
 ## Features
 
-Notify you in Discord when a website changes:  
-![site-watcher](./.github/pictures/site-watcher.png)
-
-- Support a variety of formats, i.e. rss, pdf, html, json etc.
+- Support a variety of formats including rss, pdf, html, json and more.
 - Extract specific values from the site, and trigger alerts based on those values
 - Add multiple sites to watcher
-- Checks on a specified interval (cronjob, currently configured in the source code)).
+- Checks on a specified interval (cronjob, currently configured in the source code).
 - Update tracked sites via modification of the underlying json or via bot commands
 - Open source!
 
 ## Setup
-
-\*These instructions are pretty sparse/a WIP and require some knowledge of typescript. I also didn't complete a usage section yet. If someone is interested in using this I can put one together.
 
 1. Create a discord bot [discord.com/developers/applications](https://discord.com/developers/applications). A tutorial can be found [here](https://discordpy.readthedocs.io/en/latest/discord.html).
 2. Install npm packages, compile the typescript project
@@ -38,12 +33,10 @@ Configuring the bot:
 
 1. Invite the bot to your Discord server by replacing `123456789012345678` in the following link with your bot's client id: `https://discord.com/oauth2/authorize?client_id=123456789012345678&scope=bot&permissions=8`.
 2. Create a site config file called `sites.json` at the path src/json/sites.json. Follow the example shown in `sample-sites.json` to populate the file, OR...
-   \*\*\* Since the original version of this bot there have been major refactors to change what constitutes a valid site file. JSON arrays now have to be saved as strings so that redis can properly store and retrieve them. The reason redis arrays are not used is to preserve numeric indices wherever those are set
-3. Run the bot via node then add a website with the `!add <URL>` command. //(Still needs to be implemented)
+   \*\*\* Since the original version of this bot there have been major refactors to change what constitutes a valid site file. JSON arrays now have to be saved as strings so that redis can properly store and retrieve them. The reason redis arrays are not used is to preserve numeric indices wherever those are set.
+3. Run the bot (with node) then add a website with the `!add <URL>` command. //(Still needs to be implemented)
 
 For all other options, see [Commands](#Commands).
-
-All details from here on are incomplete
 
 ## Commands
 
@@ -191,22 +184,34 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 A config/site object looks something like this:
 
 {
+
 "id": "jobless",
+
 "url": "https://www.dol.gov/ui/data.pdf",
+
 "contentSelector": "body",
+
 "lastChecked": "7/22/2021, 3:09:44 AM",
+
 "lastUpdated": "7/22/2021, 3:09:44 AM",
+
 "regex": "(?<= initial claims was ).\*(?=, a ..crease)",
+
 "hash": "412adf44f97b7ac387ae276edbd1b8c3",
+
 "match": "360,000",
+
 "sendAnyChange": "true",
+
 "index": null,
+
 "format": "pdf"
+
 }
 
 The arguments to care about are:
 
-_id_: for a predetermined monitor object, will affect how the returned content is parsed
+_id_: identifier for the site that is being tracked
 _url_: the address of the data source
 _contentSelector_: Used for css queries, retrieving nested json or whatever is appropriate for the case that you've defined
 _regex_: used to clean up the string retrieved by earlier logic
