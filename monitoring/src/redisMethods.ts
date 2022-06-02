@@ -4,7 +4,7 @@ import { logger } from "./utils/logger";
 import { Client } from "discord.js";
 
 /**
- * reads in JSON and creates hashes out of them
+ * reads in JSON and creates hashes
  */
  export async function writeSiteJsonToRedis() {
     var tempJson: {[x: string]: string}[] = readJSONSync('src/json/sites.json');
